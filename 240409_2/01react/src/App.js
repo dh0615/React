@@ -33,15 +33,23 @@ const reducer = (state, action) => {
       return action.data;
     }
     case "CREATE": {
-      return [action.data, ...state];
+      const newState = [action.data, ...state];
+      localStorage.setItem("diary", JSON.stringify(newState));
+      return newState;
     }
     case "UPDATE": {
-      return state.map((it) =>
+      const newState = state.map((it) =>
         String(it.id) === String(action.data.id) ? { ...action.data } : it
       );
+      localStorage.setItem("diary", JSON.stringify(newState));
+      return newState;
     }
     case "DELETE": {
-      return state.filter((it) => String(it.id) !== String(action.targerId));
+      const newState = state.filter(
+        (it) => String(it.id) !== String(action.targerId)
+      );
+      localStorage.setItem("diary", JSON.stringify(newState));
+      return newState;
     }
     default: {
       return state;
@@ -50,15 +58,35 @@ const reducer = (state, action) => {
 };
 
 export const DiaryStateContext = React.createContext();
+export const DiaryDispatchContext = React.createContext();
 
 function App() {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [data, dispatch] = useReducer(reducer, []);
   const idRef = useRef(0);
+  // useEffect(() => {
+  //   dispatch({
+  //     type: "INIT",
+  //     data: mockData,
+  //   });
+  //   setIsDataLoaded(true);
+  // }, []);
   useEffect(() => {
+    const rawData = localStorage.getItem("diary");
+    if (!rawData) {
+      setIsDataLoaded(true);
+      return;
+    }
+    const localData = JSON.parse(rawData);
+    if (localData.length === 0) {
+      setIsDataLoaded(true);
+      return;
+    }
+    localData.sort((a, b) => Number(b.id) - Number(a.id));
+    idRef.current = localData[0].id + 1;
     dispatch({
       type: "INIT",
-      data: mockData,
+      data: localData,
     });
     setIsDataLoaded(true);
   }, []);
@@ -98,14 +126,16 @@ function App() {
   } else {
     return (
       <DiaryStateContext.Provider value={data}>
-        <div className="App">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/new" element={<New />} />
-            <Route path="/diary/:id" element={<Diary />} />
-            <Route path="/edit/:id" element={<Edit />} />
-          </Routes>
-        </div>
+        <DiaryDispatchContext.Provider value={{ onCreate, onUpdate, onDelete }}>
+          <div className="App">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/new" element={<New />} />
+              <Route path="/diary/:id" element={<Diary />} />
+              <Route path="/edit/:id" element={<Edit />} />
+            </Routes>
+          </div>
+        </DiaryDispatchContext.Provider>
       </DiaryStateContext.Provider>
     );
   }

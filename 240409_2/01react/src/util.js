@@ -82,3 +82,8 @@ export const getMonthRangeByDate = (date) => {
   //2024년 4월 1일부터 시작해서 24년 5월 0일 23:59:59까지 인식하게한 다음 getTime
   return { beginTimeStamp, endTimeStamp };
 };
+
+export const setPageTitle = (title) => {
+  const titleElement = document.getElementsByTagName("title")[0];
+  titleElement.innerText = title;
+};
