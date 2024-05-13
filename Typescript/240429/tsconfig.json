@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "outDir": "dist", // ts를 컴파일링 하면 모든 파일이 생성되니까 분리해서 관리하자는 뜻
+    "strict": true,
+    "moduleDetection": "force", // 모든 타입스크립트를 알아서 독립적으로 인식해서 충돌 방지한다는 뜻
+    "esModuleInterop": true,
+    "moduleResolution": "Node", // 외부 라이브러리의 의존도가 높은 프로그램은 충돌이 많이 나기 때문에 이를 방지하기 위해 작성해줌
+    "sourceMap": true,
+    "downlevelIteration": true, // 반복문을 쓸 때 에러가 나오지 않게 해줌
+    "noImplicitAny": false,
+    "allowJs": true, // 타입스크립트가 자바스크립트를 끌어오고 싶은 경우
+
+    "skipLibCheck": true
+  },
+  "ts-node": {
+    "esm": true
+  },
+  "include": ["src"]
+}

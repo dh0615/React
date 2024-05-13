@@ -1,0 +1,30 @@
+// 추상클래스
+// 추상 : 여러개의 사물이나 개념의 공통적인 요소를 추출해서 만들어내는 개념
+// 공통적인 속성을 가지고 있는 서로 다른 요소의 객체를 만들어야 하는 경우 추상클래스를 사용한다.
+// 단, 추상 클래스가 되려면 반드시 공통적인 속성 및 메서드가 1개 이상 존재해야한다. = 추상 컨셉의 속성 및 메서드가 1개 이상 있어야 한다
+
+abstract class Developer {
+  abstract coding(): void;
+  drink(): void {
+    console.log("drink");
+  }
+}
+
+class FrontEndDeveloper extends Developer {
+  coding(): void {
+    console.log("develop");
+  }
+  design(): void {
+    console.log("design");
+  }
+}
+
+// 추상클래스도 클래스
+// 일반적인 다른 클래스처럼 인스턴스를 만들어낼 수 있을까?
+
+// const dev01 = new Developer(); // 추상 클래스도 클래스 인 것은 맞으나 일반 클래스처럼 인스턴스를 만들어낼 수 는 없음
+const dev = new FrontEndDeveloper();
+dev.coding;
+
+// 클래스를 선언할 때 클래스 안에는 속성 & 메서드
+// 클래스 =>  객체 생성
