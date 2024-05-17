@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { fetchCoins } from "../api";
+import { useQuery } from "react-query";
+import { Helmet } from "react-helmet";
 
 const Container = styled.div`
   padding: 20px;
@@ -92,18 +95,21 @@ interface CoinInterface {
 ]; */
 
 const Coins = () => {
-  const [coins, setCoins] = useState<CoinInterface[]>([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    (async () => {
-      const response = await fetch(
-        "https://my-json-server.typicode.com/Divjason/coinlist/coins"
-      );
-      const json = await response.json();
-      setCoins(json);
-      setLoading(false);
-    })();
-  }, []);
+  const { isLoading, data } = useQuery<CoinInterface[]>("allCoins", fetchCoins);
+
+  // const [coins, setCoins] = useState<CoinInterface[]>([]);
+  // const [loading, setLoading] = useState(true);
+  // useEffect(() => {
+  //   (async () => {
+  //     const response = await fetch(
+  //       "https://my-json-server.typicode.com/Divjason/coinlist/coins"
+  //     );
+  //     const json = await response.json();
+  //     setCoins(json);
+  //     setLoading(false);
+  //   })();
+  // }, []);
+
   // const data = async () => {
   //   const response = await fetch(
   //     "https://my-json-server.typicode.com/Divjason/coinlist/coins"
@@ -114,14 +120,17 @@ const Coins = () => {
   // data(); 이렇게 쓰는 것을 고차함수를 이용해서 굳이 data라는 함수를 한번 더 지정해주지 않아도 되도록
   return (
     <Container>
+      <Helmet>
+        <title>Coin</title>
+      </Helmet>
       <Header>
         <Title>Coins Information</Title>
       </Header>
-      {loading ? (
+      {isLoading ? (
         <Loader>"Loading..."</Loader>
       ) : (
         <CoinList>
-          {coins.map((coin) => (
+          {data?.map((coin) => (
             <Coin key={coin.id}>
               <Link to={`/${coin.id}`} state={`${coin.name}`}>
                 // Now Rank : {coin.rank}
