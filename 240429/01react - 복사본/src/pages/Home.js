@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 import catImage from "../assets/ggompang.jpeg";
 
 const Wrapper = styled.div`
-  witdh: 100%;
+  width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;

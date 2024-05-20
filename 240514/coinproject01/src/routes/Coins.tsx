@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { fetchCoins } from "../api";
 import { useQuery } from "react-query";
 import { Helmet } from "react-helmet";
+import { isDarkAtom } from "../atoms";
+import { useSetRecoilState } from "recoil";
 
 const Container = styled.div`
   padding: 20px;
@@ -21,8 +23,8 @@ const Header = styled.header`
 const CoinList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: ${(props) => props.theme.textColor};
-  color: ${(props) => props.theme.bgColor};
+  background-color: ${(props) => props.theme.accentColor};
+  color: ${(props) => props.theme.textColor};
   margin-bottom: 10px;
   padding: 20px;
   border-radius: 16px;
@@ -33,7 +35,7 @@ const Coin = styled.li`
     transition: all 0.3s;
   }
   &:hover {
-    color: ${(props) => props.theme.accentColor};
+    color: ${(props) => props.theme.bgColor};
   }
 `;
 
@@ -94,7 +96,12 @@ interface CoinInterface {
   },
 ]; */
 
+interface IcoinProps {
+  toggleDark: () => void;
+}
+
 const Coins = () => {
+  const setterFn = useSetRecoilState(isDarkAtom);
   const { isLoading, data } = useQuery<CoinInterface[]>("allCoins", fetchCoins);
 
   // const [coins, setCoins] = useState<CoinInterface[]>([]);
@@ -125,6 +132,7 @@ const Coins = () => {
       </Helmet>
       <Header>
         <Title>Coins Information</Title>
+        <button onClick={() => setterFn((prev) => !prev)}>Toggle Mode</button>
       </Header>
       {isLoading ? (
         <Loader>"Loading..."</Loader>

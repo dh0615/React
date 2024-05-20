@@ -137,6 +137,10 @@ interface priceData {
   };
 }
 
+interface IcoinProps {
+  isDark: boolean;
+}
+
 const Coin = () => {
   const { coinId } = useParams<RouterParams | any>();
   const { state } = useLocation() as LocationState;
