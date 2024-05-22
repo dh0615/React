@@ -234,3 +234,33 @@ let num5 = 10 as unknown;
 // 좋지 않은 타입 정의 방법 : any
 // 다중 타입 단언
 // let num7
+
+// enum Role {
+//   ADMIN = 0,
+//   USER = 1,
+//   GUEST = 2,
+// }
+
+// const user01 = {
+//   name: "Mark",
+//   role: Role.ADMIN,
+// };
+// const user02 = {
+//   name: "John",
+//   role: Role.USER,
+// };
+// const user03 = {
+//   name: "Riku",
+//   role: Role.GUEST,
+// };
+
+// enum Language {
+//   korean = "ko",
+//   english = "en",
+// }
+
+// const user04 = {
+//   name: "폼폼푸린",
+//   role: Role.ADMIN,
+//   language: Language.korean,
+// };
