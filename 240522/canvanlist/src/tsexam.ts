@@ -232,3 +232,168 @@
 // // getLength(null);
 // // getLength(undefined);
 // // 이거는 안됨
+
+// 제네릭 타입 응용 : React.js => JSX 문법을 활용한 반복실행 처리 > map
+// 타입정의 허들
+// 기존 배열을 가져와서 어떤 연산작업 후 새로운 배열을 생성!!
+// a: [1,2,3,4] => b = ["1", "2", "3"]
+
+// const arr: number[] = [1, 2, 3];
+// const newArr = arr.map((it) => it * 2);
+// // [2,4,6]
+
+// const map = (
+//   arr: unknown[],
+//   callback: (item: unknown) => unknown
+// ): unknown[] => {
+//   return [];
+// };
+
+// map 매서드 타입을 타입변수를 활용한 제네릭 형식으로 정의했을 때
+
+// const arr = [1, 2, 3];
+// const map = <T, U>(arr: T[], callback: (item: T) => U): U[] => {
+//   let result = [];
+//   for (let i = 0; i < arr.length; i++) {
+//     result.push(callback(arr[i]));
+//   }
+//   return result;
+// };
+
+// // map(arr, (it) => it * 2);
+// map(arr, (it) => it.toString());
+
+// // forEach 매서드 타입 정의
+
+// const arr2 = [1, 2, 3];
+
+// arr2.forEach((it) => console.log(it));
+
+// const forEach = <T>(arr: T[], callback: (item: T) => void) => {
+//   for (let i = 0; i < arr.length; i++) {
+//     callback(arr[i]);
+//   }
+// };
+
+// // 제네릭 응용 : 인터페이스
+
+// interface KeyPair<K, T> {
+//   key: K;
+//   value: T;
+// }
+
+// let KeyPair: KeyPair<string, number> = {
+//   key: "Key",
+//   value: 0,
+// };
+
+// let KeyPair2: KeyPair<boolean, string[]> = {
+//   key: true,
+//   value: ["1"],
+// };
+
+// interface Map<V> {
+//   [key: string]: V;
+// }
+
+// let stringMap: Map<string> = {
+//   key: "value",
+// };
+
+// let booleanMap = {
+//   key: true,
+// };
+
+// type Map2<V> = {
+//   [key: string]: V;
+// };
+
+// let stringMap2: Map2<string> = {
+//   key: "string",
+// };
+
+// // 제네릭 인터페잇스를 활용한 또다른 예제
+
+// interface Student {
+//   type: "student";
+//   school: string;
+// }
+// interface Developer {
+//   type: "developer";
+//   skill: string;
+// }
+
+// // type A = B | C;
+
+// interface User<T> {
+//   name: string;
+//   profile: T;
+// }
+
+// const goToSchool = (user: User<Student>) => {
+//   if (user.profile.type !== "student") {
+//     console.log("잘못오셨습니다");
+//     return;
+//   }
+//   const school = user.profile.school;
+//   console.log(`${school}로 등교 완료`);
+// };
+
+// const developerUser: User<Developer> = {
+//   name: "Mark",
+//   profile: {
+//     type: "developer",
+//     skill: "TS",
+//   },
+// };
+// const studentUser: User<Student> = {
+//   name: "Jane",
+//   profile: {
+//     type: "student",
+//     school: "TS",
+//   },
+// };
+
+// // 제네릭 응용
+// // class NumberList {
+// //   constructor(public list: number[]) {}
+// //   push(data: number) {
+// //     this.list.push(data);
+// //   }
+// //   pop() {
+// //     return this.list.pop();
+// //   }
+// //   print() {
+// //     console.log(this.list);
+// //   }
+// // }
+
+// // class StringList {
+// //   constructor(public list: number[]) {}
+// //   push(data: number) {
+// //     this.list.push(data);
+// //   }
+// //   pop() {
+// //     return this.list.pop();
+// //   }
+// //   print() {
+// //     console.log(this.list);
+// //   }
+// // }
+// // const numberList = new NumberList([1, 2, 3]);
+// // const stringList = new StringList([1, 2, 3]);
+// //
+// class List<T> {
+//   constructor(public list: T[]) {}
+//   push(data: number) {
+//     this.list.push();
+//   }
+//   pop() {
+//     return this.list.pop();
+//   }
+//   print() {
+//     console.log(this.list);
+//   }
+// }
+// const numberList = new List([1, 2, 3]);
+// const stringList = new List(["1", "2", "3"]);
