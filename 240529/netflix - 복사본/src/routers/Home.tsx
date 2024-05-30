@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import { getMovies, IGetMoviesResult } from "../api";
 import { makeImagePath } from "../utils";
-import Modal from "./Modal";
+import { idText } from "typescript";
 
 const Wrapper = styled.div`
   background: #000;
@@ -133,7 +133,6 @@ const Home = () => {
     ["movies", "nowPlaying"],
     getMovies
   );
-  const [modalOpen, setModalOpen] = useState(false);
   return (
     <Wrapper>
       {isLoading ? (
